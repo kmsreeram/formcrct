@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% load static %}
+{% block title %}Sign In{% endblock title %}
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Sign In</h1>
+
+    {% if messages %}
+    <ul class="alert alert-dismissible fade show" role="alert">
+        {% for message in messages %}
+        <li class="alert {{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <form method="post" action="/signin/" class="border p-4 rounded shadow-sm bg-light">
+        {% csrf_token %}
+        <div class="form-group mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" id="username" name="username" class="form-control" placeholder="Enter your username" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="password1" class="form-label">Password</label>
+            <input type="password" id="password1" name="password1" class="form-control" placeholder="Enter your password" required>
+        </div>
+
+        <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Ecom Shop</title>
+    <link rel="stylesheet" href="{% static 'home/css/dome.css' %}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" style="color: #ffffff; font-size: 29px; text-align: center; font-family: 'Papyrus', Fantasy;">Ecom-Shop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'products' %}">Products</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signup' %}">Register</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'signin' %}">Login</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'signout' %}">Log Out</a>
+                    </li>
+
+                </ul>
+
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <img src="{% static 'gog.jpg' %}" alt="Image" width="100%" height="100%">
+
+    <div>
+        <p style="color: #232323; font-size: 45px; text-align: center; font-family: 'Brush Script MT', Cursive;font-size:90px;">Explore Electronics</p>
+    </div>
+    <div class="container">
+        <div class="row">
+            {% for i in product %}
+            <div class="col-9 col-md-4">
+                <div>
+                    <div class="card" style="width: 18rem;">
+                        {% if i.image %}
+                            <img src="{{ i.image.url }}" class="card-img-top" alt="{{ i.name }}">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ i.name }}</h5>
+                            <p class="card-text">{{ i.price }}$</p>
+                            <p class="card-text">{{ i.desc|slice:":55" }}</p>
+                            <a href="{% url 'product_detail' i.id %}" style="font-size: 18px; text-decoration: none; color: #ae6213;">Click here for more information</a>
+                            <a href="{% url 'add_product' %}" class="btn btn-primary">Add Product</a>
+                            <a href="{% url 'edit_product' i.id %}" class="btn btn-secondary">Edit Product</a>
+                            <a href="{% url 'delete_product' i.id %}"class="btn btn-danger">Delete</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
